@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import { ReportTemplateService } from 'src/report-template/report-template.service';
 import { Cron } from '@nestjs/schedule';
 import { logger } from 'src/logger/logger';
-import { RequestAmoService } from '../request-amo/request-amo.service';
 
 @Injectable()
 export class TelegramService {
