@@ -1,0 +1,16 @@
+export const config = () => ({
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  redirectUri: process.env.REDIRECT_URI,
+  token: process.env.TOKEN,
+  chatId: process.env.CHATID,
+  host: process.env.TYPEORM_HOST,
+  username: process.env.TYPEORM_USERNAME,
+  port: process.env.TYPEORM_PORT,
+  password: process.env.TYPEORM_PASSWORD,
+  synchronize: process.env.TYPEORM_SYNCHRONIZE,
+  database: process.env.TYPEORM_DATABASE,
+  migrations: process.env.TYPEORM_MIGRATIONS,
+  tableName: process.env.TYPEORM_MIGRATIONS_TABLE_NAME,
+  entities: process.env.TYPEORM_ENTITIES,
+});
