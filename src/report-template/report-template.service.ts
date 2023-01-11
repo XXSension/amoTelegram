@@ -46,14 +46,11 @@ export class ReportTemplateService {
   }
 
   async ManagersReportTemplate(managersId: Array<number>): Promise<string> {
-    const managers = await this.requestAmoService.getManagers();
-    const tasks = await this.requestAmoService.AmoTasks();
-    const events = await this.requestAmoService.getEvents();
-    const leadsColds = events.filter(
-      (event) =>
-        event.value_before.length !== 0 &&
-        event.value_before[0].hasOwnProperty('lead_status'),
-    );
+    const [events, managers, tasks] = await Promise.all([
+      this.requestAmoService.getEvents(),
+      this.requestAmoService.getManagers(),
+      this.requestAmoService.AmoTasks(),
+    ]);
     const arrayManagers = [];
 
     for (const managerId of managersId) {
@@ -106,8 +103,10 @@ export class ReportTemplateService {
       );
       template += this.lineCreation(
         'Обработано из ХБ',
-        leadsColds.filter(
+        events.filter(
           (event) =>
+            event.value_before.length !== 0 &&
+            event.value_before[0].hasOwnProperty('lead_status') &&
             event.created_by === managerId &&
             event.value_before[0].lead_status.pipeline_id === 5663368 &&
             event.value_before[0].lead_status.id === 49853296,

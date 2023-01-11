@@ -1,17 +1,12 @@
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { AccountsService } from 'src/accounts/accounts.service';
 import { AxiosInstance } from 'axios';
-import { AuthService } from 'src/auth/auth.service';
 import { logger } from 'src/logger/logger';
 
 @Injectable()
 export class RequestAmoService {
   api: AxiosInstance;
-  constructor(
-    @Inject(forwardRef(() => AccountsService))
-    private accountService: AccountsService,
-    private authService: AuthService,
-  ) {
+  constructor(private accountService: AccountsService) {
     this.api = accountService.createConnector(29639002);
   }
 
@@ -52,13 +47,18 @@ export class RequestAmoService {
             'filter[created_at][from]': new Date().setHours(6, 0, 0, 0) / 1000,
           },
         })
-        .then((response) => response.data)
+        .then((response) => {
+          return response.data;
+        })
         .catch((err) => logger.error(err)); //Количество событий
 
-      if (managersEvents === '' || managersEvents === undefined) break;
+      if (managersEvents === '' || managersEvents === undefined) {
+        break;
+      }
       eventsArray = eventsArray.concat(managersEvents._embedded.events);
       pageNumber += 1;
     }
+
     return eventsArray;
   }
 

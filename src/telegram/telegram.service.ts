@@ -35,7 +35,7 @@ export class TelegramService {
       .catch((err) => logger.error(err));
   }
 
-  @Cron('0 0 9,12,15,18 * * *')
+  @Cron('0 0 12,15,18 * * *')
   async onModule(): Promise<void> {
     console.log(Math.round(Number(new Date()) / 1000) + 86400);
     console.log(
